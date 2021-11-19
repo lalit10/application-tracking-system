@@ -11,6 +11,7 @@ import pandas as pd
 import json
 import datetime
 import yaml
+import urllib
 
 def create_app():
     app = Flask(__name__)
@@ -143,7 +144,7 @@ with open('application.yml') as f:
     password = info['password']
     app.config['MONGODB_SETTINGS'] = {
         'db': 'appTracker',
-        'host': f'mongodb+srv://{username}:{password}@apptracker.goffn.mongodb.net/appTracker?retryWrites=true&w=majority'
+        'host': f'mongodb+srv://{username}:'+urllib.parse.quote(password)+f'@cluster0.930qa.mongodb.net/appTracker?retryWrites=true&w=majority'
     }
 db = MongoEngine()
 db.init_app(app)
