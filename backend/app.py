@@ -46,6 +46,17 @@ def create_app():
     # search function
     # params:
     #   -keywords: string
+    @app.route("/login",methods=['POST'])
+    def login():
+        body = json.loads(request.data)
+        email = body['email']
+        passwd = body['passwd']
+        userList = User.objects()
+        for user in userList:
+            if user['email'] == email and user['passwd'] == passwd:  
+                return jsonify({"x-access-token":user['id']})
+        return jsonify({"Err":"Login failed"}), 510
+
     @app.route("/search")
     def search():
         keywords = request.args.get('keywords') if request.args.get('keywords') else 'random_test_keyword'
