@@ -106,8 +106,7 @@ def create_app():
     def add_application():
         a = json.loads(request.data)['application']
         print(a)
-        application = Application(id=get_new_id(),
-                                  jobTitle=a['jobTitle'],
+        application = Application(jobTitle=a['jobTitle'],
                                   companyName=a['companyName'],
                                   date=a['date'],
                                   status=a['status'])
@@ -161,13 +160,22 @@ with open('application.yml') as f:
 db = MongoEngine()
 db.init_app(app)
 
+class User(db.Document):
+    id = db.SequenceField(primary_key=True)
+    name = db.StringField(required=True, max_length=100)
+    email = db.StringField(required=True)
+    passwd = db.StringField(required=True)
+    addr = db.StringField(max_length=100)
+    phone = db.StringField(required=True)
+    jobProfile = db.StringField()
+
 class Application(db.Document):
     id = db.SequenceField(primary_key=True)
     jobTitle = db.StringField()
     companyName = db.StringField()
     date = db.StringField()
     status = db.StringField(default="1")
-
+    user = db.ReferenceField(User)
     def to_json(self):
         return {"id": self.id,
                 "jobTitle": self.jobTitle,
