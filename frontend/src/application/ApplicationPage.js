@@ -26,6 +26,9 @@ export default class CardBoard extends Component {
         return $.ajax({
                 url: 'http://localhost:5000/application',
                 method: 'GET',
+                headers:{
+                    'x-access-token':'2'
+                },
                 error: (err)=>{
                     console.log(JSON.stringify(err));
                 }
@@ -55,17 +58,19 @@ export default class CardBoard extends Component {
         // console.log(application)
         if (application.id == null){
             // current application is a new application, create a new one and save in the backend.
-            console.log('new application');
             $.ajax({
                 url: 'http://localhost:5000/application', //TODO: will have to replace with production URL
                 method: 'POST',
                 async: false,
+                headers:{
+                    'x-access-token':'2'
+                },
                 data:JSON.stringify({
                     application: application
                 }),
                 contentType: 'application/json',
                 success: (msg)=>{
-                    console.log(msg)
+                    console.log("Success")
                 },
                 error: (err)=>{
                     console.log(JSON.stringify(err));
@@ -75,17 +80,19 @@ export default class CardBoard extends Component {
                 }
             })
         } else {
-            console.log('updating id=' + application.id)
             $.ajax({
                 url: 'http://localhost:5000/application',
                 method: 'PUT',
+                headers:{
+                    'x-access-token':'2'
+                },
                 async: false,
                 data:JSON.stringify({
                     application: application
                 }),
                 contentType: 'application/json',
                 success: (msg)=>{
-                    console.log(msg)
+                    console.log("Success")
                 },
                 complete: (data)=> {
                     this.componentDidMount()
@@ -108,17 +115,19 @@ export default class CardBoard extends Component {
 
     deleteApplication(application) {
         let newApplications = this.state.applications
-        console.log('deleting id=' + application.id)
         $.ajax({
             url: 'http://localhost:5000/application',
             method: 'DELETE',
+            headers:{
+                'x-access-token':'2'
+            },
             async: false,
             data:JSON.stringify({
                 application: application
             }),
             contentType: 'application/json',
             success: (msg)=>{
-                    console.log(msg)
+                    console.log("Success")
             },
             error: (err)=>{
                 console.log(JSON.stringify(err));
