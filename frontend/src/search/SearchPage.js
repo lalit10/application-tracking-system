@@ -113,6 +113,7 @@ export default class SearchPage extends Component {
 
         return (
             <div>
+                <h1 className="text-center">Company Search</h1>
                 <div className="container">
                     <div className="row">
                         <div className="col-6 input-group mb-3">

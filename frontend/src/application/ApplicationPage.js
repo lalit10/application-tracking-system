@@ -25,7 +25,10 @@ export default class CardBoard extends Component {
     getData(){
         return $.ajax({
                 url: 'http://localhost:5000/application',
-                method: 'GET'
+                method: 'GET',
+                error: (err)=>{
+                    console.log(JSON.stringify(err));
+                }
         })
     }
 
@@ -64,8 +67,11 @@ export default class CardBoard extends Component {
                 success: (msg)=>{
                     console.log(msg)
                 },
-                complete: function(data) {
-                    newApplications.push(data.responseJSON)
+                error: (err)=>{
+                    console.log(JSON.stringify(err));
+                },    
+                complete: (data)=> {
+                    this.componentDidMount()
                 }
             })
         } else {
@@ -81,10 +87,8 @@ export default class CardBoard extends Component {
                 success: (msg)=>{
                     console.log(msg)
                 },
-                complete: function(data) {
-                    let updatedApp = data.responseJSON
-                    let idx = newApplications.findIndex((a => a.id === updatedApp.id))
-                    newApplications[idx] = updatedApp
+                complete: (data)=> {
+                    this.componentDidMount()
                 }
             })
         }
@@ -116,9 +120,11 @@ export default class CardBoard extends Component {
             success: (msg)=>{
                     console.log(msg)
             },
-            complete: function(data) {
-                let idx = newApplications.indexOf(data.responseJSON)
-                newApplications.splice(idx, 1)
+            error: (err)=>{
+                console.log(JSON.stringify(err));
+            },
+            complete: (data)=>{
+                this.componentDidMount()
             }
         })
         // rerender the page to represent the update result
@@ -230,15 +236,18 @@ export default class CardBoard extends Component {
                                           deleteApplication={this.deleteApplication.bind(this)}/>
         }
         return (
-            <span id="tab">
-                <div className="row">
-                    {this.state.card_titles}
-                </div>
-                <div className="row">
-                    {this.state.card_class}
-                </div>
-                {applicationModal}
-            </span>
+            <div>
+            <h1 className="text-center">Dashboard</h1>
+                <span id="tab">
+                    <div className="row">
+                        {this.state.card_titles}
+                    </div>
+                    <div className="row">
+                        {this.state.card_class}
+                    </div>
+                    {applicationModal}
+                </span>
+            </div>
         )
     }
 }
