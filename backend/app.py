@@ -13,6 +13,18 @@ import datetime
 import yaml
 import urllib
 
+def authenticator():
+    authObj = ""
+    if( request.headers.has_key('x-access-token')):
+        authObj = request.headers['x-access-token']
+    if len(authObj)>0:
+        userId = authObj
+        userList = User.objects()
+        for user in userList:
+            if int(userId) == int(user['id']):
+                return userId
+    return 0
+
 def create_app():
     app = Flask(__name__)
     # make flask support CORS
