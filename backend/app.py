@@ -66,18 +66,19 @@ def create_app():
     def get_data():
 
         applications = Application.objects()
-        print(applications)
-        if len(applications) == 0:
-            Application(id=1, jobTitle='Backend Engineer', companyName='Facebook',
-                        date=str(datetime.date(2021, 9, 22))).save()
-            Application(id=2, jobTitle='Front-end Engineer', companyName='Roblox',
-                        date=str(datetime.date(2021, 9, 22))).save()
-            Application(id=3, jobTitle='Software Engineer', companyName='Cisco',
-                        date=str(datetime.date(2021, 10, 12))).save()
-            Application(id=4, jobTitle='Software Engineer', companyName='Amazon',
-                        date=str(datetime.date(2021, 9, 24))).save()
-            Application(id=5, jobTitle='Software Engineer', companyName='Google',
-                        date=str(datetime.date(2021, 9, 23))).save()
+        # print(applications)
+        # if len(applications) == 0:
+            # provide some initial data
+            # Application(id=1, jobTitle='Backend Engineer', companyName='Facebook',
+            #             date=str(datetime.date(2021, 9, 22))).save()
+            # Application(id=2, jobTitle='Front-end Engineer', companyName='Roblox',
+            #             date=str(datetime.date(2021, 9, 22))).save()
+            # Application(id=3, jobTitle='Software Engineer', companyName='Cisco',
+            #             date=str(datetime.date(2021, 10, 12))).save()
+            # Application(id=4, jobTitle='Software Engineer', companyName='Amazon',
+            #             date=str(datetime.date(2021, 9, 24))).save()
+            # Application(id=5, jobTitle='Software Engineer', companyName='Google',
+            #             date=str(datetime.date(2021, 9, 23))).save()
 
         apps_list = []
         for a in applications:
