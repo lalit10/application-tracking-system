@@ -68,7 +68,6 @@ def create_app():
         applications = Application.objects()
         print(applications)
         if len(applications) == 0:
-            # provide some initial data
             Application(id=1, jobTitle='Backend Engineer', companyName='Facebook',
                         date=str(datetime.date(2021, 9, 22))).save()
             Application(id=2, jobTitle='Front-end Engineer', companyName='Roblox',
