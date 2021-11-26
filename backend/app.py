@@ -150,7 +150,7 @@ db = MongoEngine()
 db.init_app(app)
 
 class Application(db.Document):
-    id = db.IntField(primary_key=True)
+    id = db.SequenceField(primary_key=True)
     jobTitle = db.StringField()
     companyName = db.StringField()
     date = db.StringField()
@@ -163,14 +163,14 @@ class Application(db.Document):
                 "date": self.date,
                 "status": self.status}
 
-def get_new_id():
-    id_list = []
-    for a in Application.objects():
-        id_list.append(a['id'])
-    nums = list(range(1, max(id_list) + 1))
-    if set(nums) == set(id_list):
-        return max(id_list) + 1
-    return min(set(nums) - set(id_list))
+# def get_new_id():
+#     id_list = []
+#     for a in Application.objects():
+#         id_list.append(a['id'])
+#     nums = list(range(1, max(id_list) + 1))
+#     if set(nums) == set(id_list):
+#         return max(id_list) + 1
+#     return min(set(nums) - set(id_list))
 
 if __name__ == "__main__":
     app.run()
