@@ -57,6 +57,21 @@ def create_app():
                 return jsonify({"x-access-token":user['id']})
         return jsonify({"Err":"Login failed"}), 510
 
+    @app.route("/createorUpdateUser",methods=['POST'])
+    def createUser():
+        a = json.loads(request.data)
+        # print(a)
+        
+        user = User(name=a['name'],
+                                  email=a['email'],
+                                  addr=a['addr'],
+                                  phone=a['phone'],
+                                  jobProfile=a['jobProfile'],
+                                  passwd=a['passwd'])
+        user.save()
+        return jsonify(user.to_json())
+
+
     @app.route("/search")
     def search():
         keywords = request.args.get('keywords') if request.args.get('keywords') else 'random_test_keyword'
