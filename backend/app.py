@@ -127,7 +127,12 @@ def create_app():
             #             date=str(datetime.date(2021, 9, 24))).save()
             # Application(id=5, jobTitle='Software Engineer', companyName='Google',
             #             date=str(datetime.date(2021, 9, 23))).save()
-
+        users = User.objects()
+        if len(users) == 0:
+            # provide some initial data
+            User(name='Pratyush Vaidya', email='pavaidya@ncsu.edu', passwd='Saviour11@', addr='2376 CC', phone='9889012313', jobProfile='Software Engineer').save()
+            User(name='Anirudh Pande', email='apande@ncsu.edu', passwd='Saviour11@', addr='2376 CC', phone='9889012313', jobProfile='Software Intern').save()
+            User(name='Lalit Bangad', email='llbangad@ncsu.edu', passwd='Saviour11@', addr='2376 CC', phone='9889012313', jobProfile='Software Tester').save()
         apps_list = []
         for a in applications:
             app_dict = a.to_mongo().to_dict()
