@@ -57,7 +57,7 @@ def create_app():
                 return jsonify({"x-access-token":user['id']})
         return jsonify({"Err":"Login failed"}), 510
 
-    @app.route("/createorUpdateUser",methods=['POST'])
+    @app.route("/createOrUpdateUser",methods=['POST'])
     def createUser():
         a = json.loads(request.data)
         # print(a)
@@ -71,7 +71,17 @@ def create_app():
         user.save()
         return jsonify(user.to_json())
 
-
+    @app.route("/getUser", methods=['GET'])
+    def getUser():
+        isAuth = authenticator()
+        if isAuth == 0:
+            return {"Err":"Access Denied"},510
+        a = json.loads(request.data)
+        if(int(a['id'])!=int(isAuth)):
+            return {"Err":"Operation not permitted"},520
+        user = User.objects(id=a['id']).first()
+        return jsonify(user.to_json()),200
+        
     @app.route("/search")
     def search():
         keywords = request.args.get('keywords') if request.args.get('keywords') else 'random_test_keyword'
