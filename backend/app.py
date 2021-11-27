@@ -72,7 +72,7 @@ def create_app():
         for user in userList:
             if user['email'] == email and user['passwd'] == passwd:
                 return jsonify({"x-access-token": user['id']})
-        return jsonify({"Err": "Login failed"}), 510
+        return jsonify({"Err": "Login failed"}), 430
 
     """
     path: <server_url>/createOrUpdateUser
@@ -117,10 +117,10 @@ def create_app():
     def getUser():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access Denied"}, 510
+            return {"Err": "Access Denied"}, 430
         a = json.loads(request.data)
         if (int(a['id']) != int(isAuth)):
-            return {"Err": "Operation not permitted"}, 520
+            return {"Err": "Operation not permitted"}, 420
         user = User.objects(id=a['id']).first()
         return jsonify(user.to_json()), 200
 
@@ -167,7 +167,7 @@ def create_app():
     def get_data():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access Denied"}, 510
+            return {"Err": "Access Denied"}, 430
         applications = Application.objects()
         # print(applications)
         # if len(applications) == 0:
@@ -217,7 +217,7 @@ def create_app():
     def get_data_csv():
         # isAuth = authenticator()
         # if isAuth == 0:
-        #     return {"Err": "Access Denied"}, 510
+        #     return {"Err": "Access Denied"}, 430
         applications = Application.objects()
         users = User.objects()
         print('users', users)
@@ -289,7 +289,7 @@ def create_app():
     def add_application():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access denied"}, 510
+            return {"Err": "Access denied"}, 430
 
         a = json.loads(request.data)['application']
         print(a)
@@ -322,7 +322,7 @@ def create_app():
     def update_application():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access denied"}, 510
+            return {"Err": "Access denied"}, 430
 
         a = json.loads(request.data)['application']
         application = Application.objects(id=a['id']).first()
@@ -333,7 +333,7 @@ def create_app():
                 vuser = user
         if vuser == 0:
             return jsonify(
-                {"Error": "No user associated with this application"}), 540
+                {"Error": "No user associated with this application"}), 440
         # print(application)
         if not application:
             return jsonify({'error': 'data not found'})
@@ -362,14 +362,14 @@ def create_app():
     def delete_application():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access denied"}, 510
+            return {"Err": "Access denied"}, 430
 
         tid = json.loads(request.data)['application']['id']
         appList = Application.objects()
         for app in appList:
             if int(app['id']) == int(tid):
                 if (int(app['user']['id']) != int(isAuth)):
-                    return jsonify({'Error': 'Operation not permitted'}), 520
+                    return jsonify({'Error': 'Operation not permitted'}), 420
         application = Application.objects(id=tid).first()
         if not application:
             return jsonify({'error': 'data not found'})
@@ -381,12 +381,12 @@ def create_app():
     def logout():
         isAuth = authenticator()
         if isAuth == 0:
-            return {"Err": "Access denied"}, 510
+            return {"Err": "Access denied"}, 430
 
         tokens = TokenBlacklist.objects()
         for token in tokens:
             if token['token'] == isAuth:
-                return jsonify({'Error': 'User Already Logged out'}), 520
+                return jsonify({'Error': 'User Already Logged out'}), 420
         token = TokenBlacklist(token=isAuth)
         token.save()
         return jsonify(isAuth), 520
