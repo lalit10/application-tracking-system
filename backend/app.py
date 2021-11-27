@@ -14,16 +14,22 @@ import yaml
 import urllib
 import csv
 
+from yaml import tokens
+
 
 def authenticator():
     authObj = ""
     if (request.headers.has_key('x-access-token')):
         authObj = request.headers['x-access-token']
+    tokens = TokenBlacklist.objects()
     if len(authObj) > 0:
         userId = authObj
         userList = User.objects()
         for user in userList:
             if int(userId) == int(user['id']):
+                for token in tokens:
+                    if token['token'] == userId:
+                        return 0
                 return userId
     return 0
 
@@ -371,6 +377,20 @@ def create_app():
             application.delete()
         return jsonify(application.to_json())
 
+    @app.route("/logout")
+    def logout():
+        isAuth = authenticator()
+        if isAuth == 0:
+            return {"Err": "Access denied"}, 510
+
+        tokens = TokenBlacklist.objects()
+        for token in tokens:
+            if token['token'] == isAuth:
+                return jsonify({'Error': 'User Already Logged out'}), 520
+        token = TokenBlacklist(token=isAuth)
+        token.save()
+        return jsonify(isAuth), 520
+
     # def shutdown_server():
     #     func = request.environ.get('werkzeug.server.shutdown')
     #     if func is None:
@@ -385,7 +405,7 @@ def create_app():
 
 
 app = create_app()
-with open('application.yml') as f:
+with open('backend/application.yml') as f:
     info = yaml.load(f, Loader=yaml.FullLoader)
     username = info['username']
     password = info['password']
@@ -398,6 +418,11 @@ with open('application.yml') as f:
     }
 db = MongoEngine()
 db.init_app(app)
+
+
+class TokenBlacklist(db.Document):
+    id = db.SequenceField(primary_key=True)
+    token = db.StringField(required=True)
 
 
 class User(db.Document):
