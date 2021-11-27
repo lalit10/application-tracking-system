@@ -112,7 +112,9 @@ def create_app():
     # get data from the CSV file for rendering root page
     @app.route("/application", methods=['GET'])
     def get_data():
-
+        isAuth = authenticator()
+        if isAuth == 0:
+            return {"Err":"Access Denied"},510
         applications = Application.objects()
         # print(applications)
         # if len(applications) == 0:
@@ -135,43 +137,66 @@ def create_app():
             User(name='Lalit Bangad', email='llbangad@ncsu.edu', passwd='Saviour11@', addr='2376 CC', phone='9889012313', jobProfile='Software Tester').save()
         apps_list = []
         for a in applications:
-            app_dict = a.to_mongo().to_dict()
-            app_dict['id'] = app_dict['_id']
-            del app_dict['_id']
-            apps_list.append(app_dict)
+            if int(a['user']['id']) == int(isAuth):
+                app_dict = a.to_mongo().to_dict()
+                app_dict['id'] = app_dict['_id']
+                del app_dict['_id']
+                apps_list.append(app_dict)
         apps_json = dumps(apps_list)
         return jsonify(apps_json), 200
 
     # write a new record to the CSV file 
     @app.route("/application", methods=['POST'])
     def add_application():
+        isAuth = authenticator()
+        if isAuth==0:
+            return {"Err":"Access denied"},510
+
         a = json.loads(request.data)['application']
         print(a)
         application = Application(jobTitle=a['jobTitle'],
                                   companyName=a['companyName'],
                                   date=a['date'],
-                                  status=a['status'])
+                                  status=a['status'],user=int(isAuth))
         application.save()
         return jsonify(application.to_json())
 
     @app.route('/application', methods=['PUT'])
     def update_application():
+        isAuth = authenticator()
+        if isAuth==0:
+            return {"Err":"Access denied"},510
+
         a = json.loads(request.data)['application']
         application = Application.objects(id=a['id']).first()
-        print(application)
+        userList = User.objects()
+        vuser = {}
+        for user in userList:
+            if int(user['id']) == int(isAuth):
+                vuser = user
+        # print(application)
         if not application:
             return jsonify({'error': 'data not found'})
         else:
             application.update(jobTitle=a['jobTitle'],
                                companyName=a['companyName'],
                                date=a['date'],
-                               status=a['status'])
+                               status=a['status'],user=vuser)
         return jsonify(a)
 
     @app.route("/application", methods=['DELETE'])
     def delete_application():
-        a = json.loads(request.data)['application']
-        application = Application.objects(id=a['id']).first()
+        isAuth = authenticator()
+        if isAuth==0:
+            return {"Err":"Access denied"},510
+
+        tid = json.loads(request.data)['application']['id']
+        appList = Application.objects()
+        for app in appList:
+            if int(app['id']) == int(tid):
+                if(int(app['user']['id'])!=int(isAuth)):
+                    return jsonify({'Error':'Operation not permitted'}), 520 
+        application = Application.objects(id=tid).first()
         if not application:
             return jsonify({'error': 'data not found'})
         else:
