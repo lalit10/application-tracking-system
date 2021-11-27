@@ -46,6 +46,15 @@ def create_app():
     # search function
     # params:
     #   -keywords: string
+    """
+    path: <server_url>/login
+    method: POST
+    headers: {}
+    body: {
+        "email" : "sample_email",
+        "passwd" : "sample_passwd"
+    }
+    """
     @app.route("/login",methods=['POST'])
     def login():
         body = json.loads(request.data)
@@ -57,6 +66,19 @@ def create_app():
                 return jsonify({"x-access-token":user['id']})
         return jsonify({"Err":"Login failed"}), 510
 
+    """
+    path: <server_url>/createOrUpdateUser
+    method: POST
+    headers: {}
+    body: {
+        "name": "sample_name",
+        "email":"sample_email",
+        "addr":"sample_addr",
+        "phone":"sample_number",
+        "jobProfile":"sample_profile",
+        "passwd":"sample_password"
+    }
+    """
     @app.route("/createOrUpdateUser",methods=['POST'])
     def createUser():
         a = json.loads(request.data)
@@ -71,6 +93,16 @@ def create_app():
         user.save()
         return jsonify(user.to_json())
 
+    """
+    path: <server_url>/getUser
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "id": "sample_user_id"
+    }
+    """
     @app.route("/getUser", methods=['GET'])
     def getUser():
         isAuth = authenticator()
@@ -109,7 +141,14 @@ def create_app():
             df.at[i, "location"] = div.find("div", {"class": "Qk80Jf"}).text
         return jsonify(df.to_dict('records'))
 
-    # get data from the CSV file for rendering root page
+    """
+    path: <server_url>/application
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {}
+    """
     @app.route("/application", methods=['GET'])
     def get_data():
         isAuth = authenticator()
@@ -145,7 +184,21 @@ def create_app():
         apps_json = dumps(apps_list)
         return jsonify(apps_json), 200
 
-    # write a new record to the CSV file 
+    """
+    path: <server_url>/application
+    method: POST
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "jobTitle": "sample_title",
+            "companyName": "sample_company",
+            "date": "sample_date",
+            "status": "sample_status"
+        }
+    }
+    """
     @app.route("/application", methods=['POST'])
     def add_application():
         isAuth = authenticator()
@@ -161,6 +214,22 @@ def create_app():
         application.save()
         return jsonify(application.to_json())
 
+    """
+    path: <server_url>/application
+    method: PUT
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "id": "application_id",
+            "jobTitle": "sample_title",
+            "companyName": "sample_company",
+            "date": "sample_date",
+            "status": "sample_status"
+        }
+    }
+    """
     @app.route('/application', methods=['PUT'])
     def update_application():
         isAuth = authenticator()
@@ -170,10 +239,12 @@ def create_app():
         a = json.loads(request.data)['application']
         application = Application.objects(id=a['id']).first()
         userList = User.objects()
-        vuser = {}
+        vuser = 0
         for user in userList:
             if int(user['id']) == int(isAuth):
                 vuser = user
+        if vuser==0:
+            return jsonify({"Error":"No user associated with this application"}), 540
         # print(application)
         if not application:
             return jsonify({'error': 'data not found'})
@@ -184,6 +255,22 @@ def create_app():
                                status=a['status'],user=vuser)
         return jsonify(a)
 
+    """
+    path: <server_url>/application
+    method: DELETE
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "id": "application_id",
+            "jobTitle": "sample_title",
+            "companyName": "sample_company",
+            "date": "sample_date",
+            "status": "sample_status"
+        }
+    }
+    """
     @app.route("/application", methods=['DELETE'])
     def delete_application():
         isAuth = authenticator()
