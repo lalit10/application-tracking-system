@@ -20,15 +20,15 @@ def authenticator():
     if( request.headers.has_key('x-access-token')):
         token = request.headers['x-access-token']
         try:
-            auth_token = jwt.decode(token)
+            auth_token = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
             userList = User.objects()
             tokenList = TokenBlacklist.objects()
             for user in userList:
                 if int(auth_token['user_id']) == int(user['id']):
                     for toke in tokenList:
-                        if toke==request.headers['x-access-token']:
+                        if toke['token']==request.headers['x-access-token']:
                             return 0
-                    return {user['id']}
+                    return user['id']
         except:
             return 0
     return 0
@@ -71,9 +71,9 @@ def create_app():
         for user in userList:
             if user['email'] == email and user['passwd'] == passwd:
                 auth_token = jwt.encode({
-                    'user_id': user['id'],
-                    'exp': datetime.utcnow()+ timedelta(hours=2)
-                })
+                        'user_id': user['id'],
+                        'exp': datetime.utcnow()+ timedelta(hours=2)
+                        }, app.config['SECRET_KEY'])
                 return jsonify({"auth-token": auth_token})
         return jsonify({"Err":"Login failed"}), 430
 
@@ -403,7 +403,7 @@ def create_app():
 
 
 app = create_app()
-with open('backend/application.yml') as f:
+with open('application.yml') as f:
     info = yaml.load(f, Loader=yaml.FullLoader)
     username = info['username']
     password = info['password']
