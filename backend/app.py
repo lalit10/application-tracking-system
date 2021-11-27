@@ -47,7 +47,7 @@ def create_app():
     def hello():
         name = request.args.get('name') if request.args.get('name') else ''
         obj = {"str": "Hello World!" + name}
-        return jsonify(obj), 300
+        return jsonify(obj), 200
 
     # search function
     # params:
@@ -61,7 +61,6 @@ def create_app():
         "passwd" : "sample_passwd"
     }
     """
-
     @app.route("/login", methods=['POST'])
     def login():
         body = json.loads(request.data)
@@ -114,7 +113,6 @@ def create_app():
         "id": "sample_user_id"
     }
     """
-
     @app.route("/getUser", methods=['GET'])
     def getUser():
         isAuth = authenticator()
@@ -164,7 +162,6 @@ def create_app():
     }
     body: {}
     """
-
     @app.route("/application", methods=['GET'])
     def get_data():
         isAuth = authenticator()
@@ -286,7 +283,6 @@ def create_app():
         }
     }
     """
-
     @app.route("/application", methods=['POST'])
     def add_application():
         isAuth = authenticator()
@@ -319,7 +315,6 @@ def create_app():
         }
     }
     """
-
     @app.route('/application', methods=['PUT'])
     def update_application():
         isAuth = authenticator()
@@ -359,7 +354,6 @@ def create_app():
         }
     }
     """
-
     @app.route("/application", methods=['DELETE'])
     def delete_application():
         isAuth = authenticator()
@@ -379,6 +373,14 @@ def create_app():
             application.delete()
         return jsonify(application.to_json())
 
+    """
+    path: <server_url>/logout
+    method: POST
+    headers: {
+        'x-access-token' : 'auth_token'
+    }
+    body: {}
+    """
     @app.route("/logout")
     def logout():
         isAuth = authenticator()
@@ -449,16 +451,6 @@ class Application(db.Document):
             "date": self.date,
             "status": self.status
         }
-
-
-# def get_new_id():
-#     id_list = []
-#     for a in Application.objects():
-#         id_list.append(a['id'])
-#     nums = list(range(1, max(id_list) + 1))
-#     if set(nums) == set(id_list):
-#         return max(id_list) + 1
-#     return min(set(nums) - set(id_list))
 
 if __name__ == "__main__":
     app.run(debug=True)
