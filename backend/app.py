@@ -13,32 +13,31 @@ import datetime
 import yaml
 import urllib
 import csv
-
-from yaml import tokens
-
+import jwt
+from datetime import datetime, timedelta
 
 def authenticator():
-    authObj = ""
-    if (request.headers.has_key('x-access-token')):
-        authObj = request.headers['x-access-token']
-    tokens = TokenBlacklist.objects()
-    if len(authObj) > 0:
-        userId = authObj
-        userList = User.objects()
-        for user in userList:
-            if int(userId) == int(user['id']):
-                for token in tokens:
-                    if token['token'] == userId:
-                        return 0
-                return userId
+    if( request.headers.has_key('x-access-token')):
+        token = request.headers['x-access-token']
+        try:
+            auth_token = jwt.decode(token)
+            userList = User.objects()
+            tokenList = TokenBlacklist.objects()
+            for user in userList:
+                if int(auth_token['user_id']) == int(user['id']):
+                    for toke in tokenList:
+                        if toke==request.headers['x-access-token']:
+                            return 0
+                    return {user['id']}
+        except:
+            return 0
     return 0
-
-
 def create_app():
     app = Flask(__name__)
     # make flask support CORS
     CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
+    app.config['SECRET_KEY'] = '$ashbdkajk78&^243+=>sfvgs'
 
     # testing API, you can try to access http://localhost:5000/ on your browser after starting the server
     # params:
@@ -71,11 +70,15 @@ def create_app():
         userList = User.objects()
         for user in userList:
             if user['email'] == email and user['passwd'] == passwd:
-                return jsonify({"x-access-token": user['id']})
-        return jsonify({"Err": "Login failed"}), 430
+                auth_token = jwt.encode({
+                    'user_id': user['id'],
+                    'exp': datetime.utcnow()+ timedelta(hours=2)
+                })
+                return jsonify({"auth-token": auth_token})
+        return jsonify({"Err":"Login failed"}), 430
 
     """
-    path: <server_url>/createOrUpdateUser
+    path: <server_url>/createUser
     method: POST
     headers: {}
     body: {
@@ -87,8 +90,7 @@ def create_app():
         "passwd":"sample_password"
     }
     """
-
-    @app.route("/createOrUpdateUser", methods=['POST'])
+    @app.route("/createUser",methods=['POST'])
     def createUser():
         a = json.loads(request.data)
         # print(a)
@@ -383,13 +385,9 @@ def create_app():
         if isAuth == 0:
             return {"Err": "Access denied"}, 430
 
-        tokens = TokenBlacklist.objects()
-        for token in tokens:
-            if token['token'] == isAuth:
-                return jsonify({'Error': 'User Already Logged out'}), 420
-        token = TokenBlacklist(token=isAuth)
+        token = TokenBlacklist(token=request.headers['x-access-token'])
         token.save()
-        return jsonify(isAuth), 520
+        return jsonify(isAuth), 200
 
     # def shutdown_server():
     #     func = request.environ.get('werkzeug.server.shutdown')
