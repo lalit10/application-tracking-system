@@ -27,7 +27,7 @@ export default class CardBoard extends Component {
                 url: 'http://localhost:5000/application',
                 method: 'GET',
                 headers:{
-                    'x-access-token':'2'
+                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
                 },
                 error: (err)=>{
                     console.log(JSON.stringify(err));
@@ -63,7 +63,7 @@ export default class CardBoard extends Component {
                 method: 'POST',
                 async: false,
                 headers:{
-                    'x-access-token':'2'
+                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
                 },
                 data:JSON.stringify({
                     application: application
@@ -84,7 +84,7 @@ export default class CardBoard extends Component {
                 url: 'http://localhost:5000/application',
                 method: 'PUT',
                 headers:{
-                    'x-access-token':'2'
+                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
                 },
                 async: false,
                 data:JSON.stringify({
@@ -119,7 +119,7 @@ export default class CardBoard extends Component {
             url: 'http://localhost:5000/application',
             method: 'DELETE',
             headers:{
-                'x-access-token':'2'
+                'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
             },
             async: false,
             data:JSON.stringify({
