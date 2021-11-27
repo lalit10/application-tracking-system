@@ -215,9 +215,9 @@ def create_app():
 
     @app.route("/application.csv", methods=['GET'])
     def get_data_csv():
-        # isAuth = authenticator()
-        # if isAuth == 0:
-        #     return {"Err": "Access Denied"}, 430
+        isAuth = authenticator()
+        if isAuth == 0:
+            return {"Err": "Access Denied"}, 430
         applications = Application.objects()
         users = User.objects()
         print('users', users)
@@ -243,7 +243,7 @@ def create_app():
                  jobProfile='Software Tester').save()
         apps_list = []
         for a in applications:
-            if int(a['user']['id']) == 1:  #int(isAuth):
+            if int(a['user']['id']) == int(isAuth):
                 app_dict = a.to_mongo().to_dict()
                 app_dict['id'] = app_dict['_id']
                 del app_dict['_id']
