@@ -1,5 +1,5 @@
 # importing required python libraries
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_mongoengine import MongoEngine
 from flask_cors import CORS, cross_origin
 from selenium import webdriver
@@ -214,6 +214,7 @@ def create_app():
         #     return {"Err": "Access Denied"}, 510
         applications = Application.objects()
         users = User.objects()
+        print('users', users)
         if len(users) == 0:
             # provide some initial data
             User(name='Pratyush Vaidya',
@@ -236,12 +237,22 @@ def create_app():
                  jobProfile='Software Tester').save()
         apps_list = []
         for a in applications:
-            if int(a['user']['id']) == 2:  #int(isAuth):
+            if int(a['user']['id']) == 1:  #int(isAuth):
                 app_dict = a.to_mongo().to_dict()
                 app_dict['id'] = app_dict['_id']
                 del app_dict['_id']
+                if int(app_dict['status']) == 1:
+                    app_dict['status'] = 'Wish list'
+                elif int(app_dict['status']) == 2:
+                    app_dict['status'] = 'Waiting for referral'
+                elif int(app_dict['status']) == 3:
+                    app_dict['status'] = 'Applied'
+                else:
+                    app_dict['status'] = 'Rejected'
+
                 apps_list.append(app_dict)
-        print(apps_list)
+
+        print('applict: ', apps_list)
 
         if len(apps_list) > 0:
             with open('ats.csv', 'w', encoding='utf8', newline='') as f:
@@ -250,6 +261,7 @@ def create_app():
                 dict_writer.writerows(apps_list)
 
             return send_file('ats.csv', mimetype='text/csv')
+        return 'check excel', 200
 
     """
     path: <server_url>/application
@@ -426,4 +438,4 @@ class Application(db.Document):
 #     return min(set(nums) - set(id_list))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
