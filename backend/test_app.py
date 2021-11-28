@@ -127,29 +127,18 @@ def test_update_application(client):
     assert jdata == 'fakeJob12345'
 
 
-#6. testing if the flask app is running properly with status code
-def test_alive_status_code(client):
-    rv = client.get('/')
-    assert rv.status_code == 200
-
-
-#7. testing loging functionality
+#6. testing loging functionality
 def test_login(client):
 
-    rv = client.post(
-        '/login',
-        json={
-            "email": "apande@ncsu.edu",
-            "passwd": "Saviour11@"
-        },
-        headers={
-            'x-access-token':
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-        })
+    rv = client.post('/login',
+                     json={
+                         "email": "apande@ncsu.edu",
+                         "passwd": "Saviour11@"
+                     })
     assert rv.status_code == 200
 
 
-#8. Testing User creation
+#7. Testing User creation
 def test_user_creation(client):
 
     rv = client.post(
@@ -169,7 +158,7 @@ def test_user_creation(client):
     assert rv.status_code == 200
 
 
-#9. Testing Get User API
+#8. Testing Get User API
 def test_getUser(client):
 
     rv = client.get(
