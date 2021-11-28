@@ -31,6 +31,7 @@ jobs:
       run: |
         cd ./backend
         printf 'username: $MONGO_USER\npassword: $MONGO_PASS' > application.yml
+        cat application.yml
         echo 'Created application.yml'
         pwd
         pytest --cov-report xml:cov.xml --cov=./ ./
