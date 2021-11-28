@@ -95,31 +95,38 @@ def test_add_application(client):
     assert jdata == 'fakeJob12345'
 
 
-# # #5. testing if the application is updating data in database properly
-# # def test_update_application(client, mocker):
-# #     application = Application(id=1,
-# #                               jobTitle='fakeJob12345',
-# #                               companyName='fakeCompany',
-# #                               date=str(datetime.date(2021, 9, 22)))
+#5. testing if the application is updating data in database properly
+def test_update_application(client):
+    # application = Application(id=1,
+    #                           jobTitle='fakeJob12345',
+    #                           companyName='fakeCompany',
+    #                           date=str(datetime.date(2021, 9, 22)))
 
-# #     mocker.patch('app.Application.update')
+    # mocker.patch('app.Application.update')
 
-# #     mock_objects = mocker.MagicMock(name='objects')
-# #     mocker.patch('app.Application.objects', new=mock_objects)
-# #     mock_objects.return_value.first.return_value = application
+    # mock_objects = mocker.MagicMock(name='objects')
+    # mocker.patch('app.Application.objects', new=mock_objects)
+    # mock_objects.return_value.first.return_value = application
 
-# #     rv = client.put('/application',
-# #                     json={
-# #                         'application': {
-# #                             'id': 1,
-# #                             'jobTitle': 'fakeJob12345',
-# #                             'companyName': 'fakeCompany',
-# #                             'date': str(datetime.date(2021, 9, 23)),
-# #                             'status': '1'
-# #                         }
-# #                     })
-# #     jdata = json.loads(rv.data.decode("utf-8"))["jobTitle"]
-# #     assert jdata == 'fakeJob12345'
+    rv = client.put(
+        '/application',
+        json={
+            'application': {
+                'id': 6,
+                'jobTitle': 'fakeJob12345',
+                'companyName': 'fakeCompany',
+                'date': str(datetime.date(2021, 9, 23)),
+                'status': '1'
+            }
+        },
+        headers={
+            'x-access-token':
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+        })
+    jdata = json.loads(rv.data.decode("utf-8"))["jobTitle"]
+    print(rv.data.decode("utf-8"))
+    assert jdata == 'fakeJob12345'
+
 
 # # 6. testing if the application is deleting data in database properly
 # def test_delete_application(client):
