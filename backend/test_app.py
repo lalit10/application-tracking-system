@@ -124,7 +124,6 @@ def test_update_application(client):
             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
         })
     jdata = json.loads(rv.data.decode("utf-8"))["jobTitle"]
-    print(rv.data.decode("utf-8"))
     assert jdata == 'fakeJob12345'
 
 
@@ -134,7 +133,7 @@ def test_alive_status_code(client):
     assert rv.status_code == 200
 
 
-#7.
+#7. testing loging functionality
 def test_login(client):
 
     rv = client.post(
@@ -142,6 +141,26 @@ def test_login(client):
         json={
             "email": "apande@ncsu.edu",
             "passwd": "Saviour11@"
+        },
+        headers={
+            'x-access-token':
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+        })
+    assert rv.status_code == 200
+
+
+#8. Testing User creation
+def test_user_creation(client):
+
+    rv = client.post(
+        '/createUser',
+        json={
+            "name": "sample_name12345",
+            "email": "sample_email",
+            "addr": "sample_addr",
+            "phone": "sample_number",
+            "jobProfile": "sample_profile",
+            "passwd": "sample_password"
         },
         headers={
             'x-access-token':
