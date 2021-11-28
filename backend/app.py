@@ -16,22 +16,27 @@ import csv
 import jwt
 from datetime import datetime, timedelta
 
+
 def authenticator():
-    if( request.headers.has_key('x-access-token')):
+    if (request.headers.has_key('x-access-token')):
         token = request.headers['x-access-token']
         try:
-            auth_token = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            auth_token = jwt.decode(token,
+                                    app.config['SECRET_KEY'],
+                                    algorithms=["HS256"])
             userList = User.objects()
             tokenList = TokenBlacklist.objects()
             for user in userList:
                 if int(auth_token['user_id']) == int(user['id']):
                     for toke in tokenList:
-                        if toke['token']==request.headers['x-access-token']:
+                        if toke['token'] == request.headers['x-access-token']:
                             return 0
                     return user['id']
         except:
             return 0
     return 0
+
+
 def create_app():
     app = Flask(__name__)
     # make flask support CORS
@@ -61,6 +66,7 @@ def create_app():
         "passwd" : "sample_passwd"
     }
     """
+
     @app.route("/login", methods=['POST'])
     def login():
         body = json.loads(request.data)
@@ -69,12 +75,14 @@ def create_app():
         userList = User.objects()
         for user in userList:
             if user['email'] == email and user['passwd'] == passwd:
-                auth_token = jwt.encode({
+                auth_token = jwt.encode(
+                    {
                         'user_id': user['id'],
-                        'exp': datetime.utcnow()+ timedelta(hours=2)
-                        }, app.config['SECRET_KEY'])
+                        'exp': datetime.utcnow() + timedelta(days=100)
+                    }, app.config['SECRET_KEY'])
+                print(auth_token)
                 return jsonify({"auth-token": auth_token})
-        return jsonify({"Err":"Login failed"}), 430
+        return jsonify({"Err": "Login failed"}), 430
 
     """
     path: <server_url>/createUser
@@ -89,7 +97,8 @@ def create_app():
         "passwd":"sample_password"
     }
     """
-    @app.route("/createUser",methods=['POST'])
+
+    @app.route("/createUser", methods=['POST'])
     def createUser():
         a = json.loads(request.data)
         # print(a)
@@ -113,6 +122,7 @@ def create_app():
         "id": "sample_user_id"
     }
     """
+
     @app.route("/getUser", methods=['GET'])
     def getUser():
         isAuth = authenticator()
@@ -162,6 +172,7 @@ def create_app():
     }
     body: {}
     """
+
     @app.route("/application", methods=['GET'])
     def get_data():
         isAuth = authenticator()
@@ -283,6 +294,7 @@ def create_app():
         }
     }
     """
+
     @app.route("/application", methods=['POST'])
     def add_application():
         isAuth = authenticator()
@@ -315,6 +327,7 @@ def create_app():
         }
     }
     """
+
     @app.route('/application', methods=['PUT'])
     def update_application():
         isAuth = authenticator()
@@ -354,6 +367,7 @@ def create_app():
         }
     }
     """
+
     @app.route("/application", methods=['DELETE'])
     def delete_application():
         isAuth = authenticator()
@@ -381,6 +395,7 @@ def create_app():
     }
     body: {}
     """
+
     @app.route("/logout")
     def logout():
         isAuth = authenticator()
@@ -451,6 +466,7 @@ class Application(db.Document):
             "date": self.date,
             "status": self.status
         }
+
 
 if __name__ == "__main__":
     app.run(debug=True)
