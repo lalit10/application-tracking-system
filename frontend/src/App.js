@@ -5,6 +5,7 @@ import React from 'react';
 import Sidebar from './sidebar/Sidebar'
 import ApplicationPage from './application/ApplicationPage'
 import SearchPage from './search/SearchPage'
+import LoginPage from './login/LoginPage';
 
 
 export default class App extends React.Component {
@@ -12,10 +13,11 @@ export default class App extends React.Component {
     super(props)
     let mapRouter = {
       'SearchPage': <SearchPage/>,
-      'ApplicationPage' : <ApplicationPage/>
+      'ApplicationPage' : <ApplicationPage/>,
+      'LoginPage': <LoginPage switchPage={this.switchPage.bind(this)}/>
     }
     this.state ={
-      currentPage: <ApplicationPage/>,
+      currentPage: <LoginPage switchPage={this.switchPage.bind(this)}/>,
       mapRouter: mapRouter
     }
   };
