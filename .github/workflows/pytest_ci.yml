@@ -30,7 +30,8 @@ jobs:
     - name: Test with pytest, upload to codecov
       run: |
         cd ./backend
-        printf "username: $MONGO_USER\npassword: $MONGO_PASS" > application.yml
+        printf '..%s..' "$foo"
+        printf 'username: %s\npassword: %s' "$MONGO_USER" "$MONGO_PASS"> application.yml
         cat application.yml
         echo 'Created application.yml'
         pwd
