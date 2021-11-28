@@ -128,60 +128,23 @@ def test_update_application(client):
     assert jdata == 'fakeJob12345'
 
 
-# # 6. testing if the application is deleting data in database properly
-# def test_delete_application(client):
-#     application = Application(id=1,
-#                               jobTitle='fakeJob12345',
-#                               companyName='fakeCompany',
-#                               date=str(datetime.date(2021, 9, 22)))
-#     # mocker.patch('app.Application.delete')
-#     # mock_objects = mocker.MagicMock(name='objects')
-#     # mocker.patch('app.Application.objects', new=mock_objects)
-#     # mock_objects.return_value.first.return_value = application
-
-#     rv = client.delete(
-#         '/application',
-#         json={
-#             'application': {
-#                 'id': 1,
-#                 'jobTitle': 'fakeJob12345',
-#                 'companyName': 'fakeCompany',
-#                 'date': str(datetime.date(2021, 9, 23)),
-#                 'status': '1'
-#             },
-#         },
-#         headers={
-#             'x-access-token':
-#             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-#         })
-#     print(rv.data)
-#     jdata = json.loads(rv.data.decode("utf-8"))["jobTitle"]
-#     print(jdata)
-#     assert jdata == 'fakeJob12345'
-
-# #7. Testing getting_new_id function returns correct next id
-# def test_get_new_id(mocker):
-#     application = Application(id=1,
-#                               jobTitle='Backend Engineer',
-#                               companyName='Facebook',
-#                               date=str(datetime.date(2021, 9, 22)))
-#     list_application = []
-#     list_application.append(application)
-#     mocker.patch(
-#         # Dataset is in slow.py, but imported to main.py
-#         'app.Application.objects',
-#         return_value=list_application)
-#     assert get_new_id() == 2
-
-
-#8. testing if the flask app is running properly with status code
+#6. testing if the flask app is running properly with status code
 def test_alive_status_code(client):
-    rv = client.get(
-        '/'
-        # Headers=
-        # "{'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'}"
-    )
+    rv = client.get('/')
     assert rv.status_code == 200
 
 
-#9.
+#7.
+def test_login(client):
+
+    rv = client.post(
+        '/login',
+        json={
+            "email": "apande@ncsu.edu",
+            "passwd": "Saviour11@"
+        },
+        headers={
+            'x-access-token':
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+        })
+    assert rv.status_code == 200
