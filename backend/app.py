@@ -130,7 +130,7 @@ def create_app():
             return {"Err": "Access Denied"}, 430
         a = json.loads(request.data)
         if (int(a['id']) != int(isAuth)):
-            return {"Err": "Operation not permitted"}, 420
+            return jsonify({'Error': 'Operation not permitted'}), 420
         user = User.objects(id=a['id']).first()
         return jsonify(user.to_json()), 200
 
@@ -336,24 +336,27 @@ def create_app():
 
         a = json.loads(request.data)['application']
         application = Application.objects(id=a['id']).first()
-        userList = User.objects()
-        vuser = 0
-        for user in userList:
-            if int(user['id']) == int(isAuth):
-                vuser = user
-        if vuser == 0:
-            return jsonify(
-                {"Error": "No user associated with this application"}), 440
-        # print(application)
-        if not application:
-            return jsonify({'error': 'data not found'})
+        if int(isAuth) == int(application['user']['id']):
+            userList = User.objects()
+            vuser = 0
+            for user in userList:
+                if int(user['id']) == int(isAuth):
+                    vuser = user
+            if vuser == 0:
+                return jsonify(
+                    {"Error": "No user associated with this application"}), 440
+            # print(application)
+            if not application:
+                return jsonify({'error': 'data not found'})
+            else:
+                application.update(jobTitle=a['jobTitle'],
+                                   companyName=a['companyName'],
+                                   date=a['date'],
+                                   status=a['status'],
+                                   user=vuser)
+            return jsonify(a)
         else:
-            application.update(jobTitle=a['jobTitle'],
-                               companyName=a['companyName'],
-                               date=a['date'],
-                               status=a['status'],
-                               user=vuser)
-        return jsonify(a)
+            return jsonify({'Error': 'Operation not permitted'}), 420
 
     """
     path: <server_url>/application
