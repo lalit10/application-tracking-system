@@ -151,8 +151,8 @@ Please see our CONTRIBUTING.md for instructions on how to contribute to the repo
 
 
 ## Team Members
-* [Setu Kumar Basak](https://github.com/setu1421)  
-* [Conor Thomason](https://github.com/ConorThomason)  
-* [Keertana Vellanki](https://github.com/KeertanaVellanki)  
-* [Muntasir Hoq](https://github.com/muntasirhoq)  
-* [Matthew Sohacki](https://github.com/msohacki)  
+* [Anirudh Pande](https://github.com/apande95)
+* [Bradley Erickson](https://github.com/bradley-erickson)
+* [Lalit Bangad](https://github.com/lalit10)
+* [Pratyush Vaidya](https://github.com/Pratyush1184)
+* [Urvashi Kar](https://github.com/Urvashi74)
