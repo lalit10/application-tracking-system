@@ -16,6 +16,11 @@
     height: 70vh;
     margin: auto;
 }
+
+.left-nav-text-wrapper {
+    text-align: center;
+}
+
 .left-nav-icon:hover {
     cursor: pointer;
 }
