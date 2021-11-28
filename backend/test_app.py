@@ -167,3 +167,16 @@ def test_user_creation(client):
             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
         })
     assert rv.status_code == 200
+
+
+#9. Testing Get User API
+def test_getUser(client):
+
+    rv = client.get(
+        '/getUser',
+        json={"id": 2},
+        headers={
+            'x-access-token':
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+        })
+    assert rv.status_code == 200
