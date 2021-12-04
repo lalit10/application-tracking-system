@@ -32,27 +32,40 @@ export default class SearchPage extends Component {
             alert("Search bar cannot be empty!!")
             return
         }
-        $.ajax({
-            url: 'http://localhost:5000/search',
-            method: 'get',
-            data: {
-                keywords: this.state.searchText
-            },
-            contentType: 'application/json',
-            success: (data) => {
-                let res = data.map((d, i) => {
-                    return {
-                        id: i,
-                        jobTitle: d.jobTitle,
-                        companyName: d.companyName,
-                        location: d.location
-                    }
-                });
-                this.setState({
-                    rows: res
-                });
-            }
-        })
+        let token = localStorage.getItem('auth-token')
+        if(token){
+            $.ajax({
+                url: 'http://localhost:5000/search',
+                method: 'GET',
+                data: {
+                    keywords: this.state.searchText
+                },
+                contentType: 'application/json',
+                headers:{
+                    'x-access-token': token
+                },
+                success: (data) => {
+                    let res = data.map((d, i) => {
+                        return {
+                            id: i,
+                            jobTitle: d.jobTitle,
+                            companyName: d.companyName,
+                            location: d.location
+                        }
+                    });
+                    this.setState({
+                        rows: res
+                    });
+                },
+                error: (err)=>{
+                    console.log(JSON.stringify(err));
+                    this.props.switchPage('LoginPage')
+                }
+            })    
+        }
+        else{
+            this.props.switchPage('LoginPage')
+        }
     }
 
     deleteTheApplication(id) {
@@ -78,7 +91,8 @@ export default class SearchPage extends Component {
                 date:  new Date().toJSON().slice(0,10).replace(/-/g,'-'),
                 status: '1'
         };
-        console.log(newApplication);
+        let token = localStorage.getItem('auth-token')
+        if(token)
         $.ajax({
             url: 'http://localhost:5000/application',
             method: 'POST',
@@ -86,12 +100,19 @@ export default class SearchPage extends Component {
                 application: newApplication
             }),
             contentType: 'application/json',
+            headers:{
+                'x-access-token': token
+            },
             success: (msg)=>{
                 console.log(msg)
+                this.setState({
+                    addedList: newAddedList
+                })        
+            },
+            error: (err)=>{
+                console.log(JSON.stringify(err));
+                this.props.switchPage('LoginPage')
             }
-        })
-        this.setState({
-            addedList: newAddedList
         })
     }
 

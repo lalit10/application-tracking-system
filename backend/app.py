@@ -136,6 +136,9 @@ def create_app():
 
     @app.route("/search")
     def search():
+        isAuth = authenticator()
+        if isAuth == 0:
+            return {"Err": "Access Denied"}, 430
         keywords = request.args.get('keywords') if request.args.get(
             'keywords') else 'random_test_keyword'
         keywords = keywords.replace(' ', '+')

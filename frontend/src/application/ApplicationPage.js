@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
-import Card from './Card';
-import CardModal from './CardModal';
+import React, { Component } from 'react'
+import Card from './Card'
+import CardModal from './CardModal'
 import $ from 'jquery'
 
-
 export default class CardBoard extends Component {
-
-    constructor(props) {
+  constructor(props) {
         super(props);
 
         this.state = {
@@ -24,8 +22,8 @@ export default class CardBoard extends Component {
     // get initial data to render the root page
     getData(){
         let token = localStorage.getItem('auth-token')
-        if(token)
-        return $.ajax({
+        if(token){
+            return $.ajax({
                 url: 'http://localhost:5000/application',
                 method: 'GET',
                 headers:{
@@ -35,7 +33,11 @@ export default class CardBoard extends Component {
                     console.log(JSON.stringify(err));
                     this.props.switchPage('LoginPage')
                 }
-        })
+            })
+        }
+        else{
+            this.props.switchPage('LoginPage')
+        }
     }
 
     componentDidMount(){

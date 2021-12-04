@@ -12,8 +12,8 @@ export default class App extends React.Component {
   constructor(props){
     super(props)
     let mapRouter = {
-      'SearchPage': <SearchPage/>,
-      'ApplicationPage' : <ApplicationPage/>,
+      'SearchPage': <SearchPage switchPage={this.switchPage.bind(this)}/>,
+      'ApplicationPage' : <ApplicationPage switchPage={this.switchPage.bind(this)}/>,
       'LoginPage': <LoginPage switchPage={this.switchPage.bind(this)}/>
     }
     this.state ={
