@@ -1,4 +1,4 @@
-## IMPROVEMENTS
+## IMPROVEMENTS - Phase 2
 
 When our team took over the project from the previous group, we thoroughly reviewed the project in order to establish an effective takeover strategy. We attempted to improve the project in as many ways as possible. We've detailed the enhancements we've made in this document.
 
