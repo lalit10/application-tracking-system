@@ -16,7 +16,7 @@ export default class Sidebar extends Component {
         }
         else{
             $.ajax({
-                url: 'http://localhost:5000/logout',
+                url: 'http://flask-group19-se.eastus.cloudapp.azure.com/:5000/logout',
                 method: 'POST',
                 contentType: 'application/json',
                 headers:{

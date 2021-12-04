@@ -35,7 +35,7 @@ export default class SearchPage extends Component {
         let token = localStorage.getItem('auth-token')
         if(token){
             $.ajax({
-                url: 'http://localhost:5000/search',
+                url: 'http://flask-group19-se.eastus.cloudapp.azure.com/search',
                 method: 'GET',
                 data: {
                     keywords: this.state.searchText
@@ -94,7 +94,7 @@ export default class SearchPage extends Component {
         let token = localStorage.getItem('auth-token')
         if(token)
         $.ajax({
-            url: 'http://localhost:5000/application',
+            url: 'http://flask-group19-se.eastus.cloudapp.azure.com//application',
             method: 'POST',
             data:JSON.stringify({
                 application: newApplication

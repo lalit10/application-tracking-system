@@ -17,7 +17,7 @@ export default class LoginPage extends Component {
             return
         }
         $.ajax({
-            url: 'http://localhost:5000/login',
+            url: 'http://flask-group19-se.eastus.cloudapp.azure.com/login',
             method: 'POST',
             data: JSON.stringify({
                 email: this.state.username,
