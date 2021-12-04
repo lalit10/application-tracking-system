@@ -10,22 +10,28 @@ import '../static/Sidebar.css'
 export default class Sidebar extends Component {
 
     logout() {
-        $.ajax({
-            url: 'http://localhost:5000/logout',
-            method: 'POST',
-            contentType: 'application/json',
-            headers:{
-                'x-access-token': localStorage.getItem('auth-token')
-            },
-            success: (data) => {
-                console.log('Logout successful');
-            },
-            error: (err) => {
-                console.log(JSON.stringify(err));
-            }
-        })
-        localStorage.removeItem('auth-token');
-        this.props.switchPage('LoginPage');
+        let token = localStorage.getItem('auth-token')
+        if(!token){
+            this.props.switchPage('LoginPage')
+        }
+        else{
+            $.ajax({
+                url: 'http://localhost:5000/logout',
+                method: 'POST',
+                contentType: 'application/json',
+                headers:{
+                    'x-access-token': token
+                },
+                success: (data) => {
+                    localStorage.removeItem('auth-token')
+                    console.log('Logout successful');
+                    this.props.switchPage('LoginPage');
+                },
+                error: (err) => {
+                    console.log(JSON.stringify(err));
+                }
+            })
+        }
     }
 
     render() {

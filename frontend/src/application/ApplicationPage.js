@@ -23,20 +23,25 @@ export default class CardBoard extends Component {
 
     // get initial data to render the root page
     getData(){
+        let token = localStorage.getItem('auth-token')
+        if(token)
         return $.ajax({
                 url: 'http://localhost:5000/application',
                 method: 'GET',
                 headers:{
-                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+                    'x-access-token': token
                 },
                 error: (err)=>{
                     console.log(JSON.stringify(err));
+                    this.props.switchPage('LoginPage')
                 }
         })
     }
 
     componentDidMount(){
         // fetch the data only after this component is mounted
+        let token = localStorage.getItem('auth-token')
+        if(token)
         this.getData()
         .done((data) => {
             data = JSON.parse(data);
@@ -49,6 +54,8 @@ export default class CardBoard extends Component {
                 card_titles: card_titles,
                 card_class: card_class
             })
+        }).catch((error)=>{
+            console.log(error)
         });
     }
 
@@ -56,98 +63,110 @@ export default class CardBoard extends Component {
     updateCardBoard(application){
         let newApplications = this.state.applications
         // console.log(application)
-        if (application.id == null){
-            // current application is a new application, create a new one and save in the backend.
-            $.ajax({
-                url: 'http://localhost:5000/application', //TODO: will have to replace with production URL
-                method: 'POST',
-                async: false,
-                headers:{
-                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-                },
-                data:JSON.stringify({
-                    application: application
-                }),
-                contentType: 'application/json',
-                success: (msg)=>{
-                    console.log("Success")
-                },
-                error: (err)=>{
-                    console.log(JSON.stringify(err));
-                },    
-                complete: (data)=> {
-                    this.componentDidMount()
-                }
-            })
-        } else {
-            $.ajax({
-                url: 'http://localhost:5000/application',
-                method: 'PUT',
-                headers:{
-                    'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-                },
-                async: false,
-                data:JSON.stringify({
-                    application: application
-                }),
-                contentType: 'application/json',
-                success: (msg)=>{
-                    console.log("Success")
-                },
-                complete: (data)=> {
-                    this.componentDidMount()
-                }
-            })
+        let token = localStorage.getItem('auth-token')
+        if(!token){
+            this.props.switchPage('LoginPage')
         }
-        // rerender the page to represent the update result
-        let result = this.groupApplication(newApplications);
-        let card_titles = this.createCardTitle(result);
-        let card_class = this.createCardClass(result);
-
-        this.setState({
-            applications: newApplications,
-            card_titles: card_titles,
-            card_class: card_class,
-            showModal: false,
-            application: null
-        })
+        else{
+            if (application.id == null){
+                // current application is a new application, create a new one and save in the backend.
+                $.ajax({
+                    url: 'http://localhost:5000/application', //TODO: will have to replace with production URL
+                    method: 'POST',
+                    async: false,
+                    headers:{
+                        'x-access-token': token
+                    },
+                    data:JSON.stringify({
+                        application: application
+                    }),
+                    contentType: 'application/json',
+                    success: (msg)=>{
+                        console.log("Success")
+                    },
+                    error: (err)=>{
+                        console.log(JSON.stringify(err));
+                    },    
+                    complete: (data)=> {
+                        this.componentDidMount()
+                    }
+                })
+            } else {
+                $.ajax({
+                    url: 'http://localhost:5000/application',
+                    method: 'PUT',
+                    headers:{
+                        'x-access-token': token
+                    },
+                    async: false,
+                    data:JSON.stringify({
+                        application: application
+                    }),
+                    contentType: 'application/json',
+                    success: (msg)=>{
+                        console.log("Success")
+                    },
+                    complete: (data)=> {
+                        this.componentDidMount()
+                    }
+                })
+            }
+            // rerender the page to represent the update result
+            let result = this.groupApplication(newApplications);
+            let card_titles = this.createCardTitle(result);
+            let card_class = this.createCardClass(result);
+    
+            this.setState({
+                applications: newApplications,
+                card_titles: card_titles,
+                card_class: card_class,
+                showModal: false,
+                application: null
+            })    
+        }
     }
 
     deleteApplication(application) {
         let newApplications = this.state.applications
-        $.ajax({
-            url: 'http://localhost:5000/application',
-            method: 'DELETE',
-            headers:{
-                'x-access-token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-            },
-            async: false,
-            data:JSON.stringify({
-                application: application
-            }),
-            contentType: 'application/json',
-            success: (msg)=>{
-                    console.log("Success")
-            },
-            error: (err)=>{
-                console.log(JSON.stringify(err));
-            },
-            complete: (data)=>{
-                this.componentDidMount()
-            }
-        })
-        // rerender the page to represent the update result
-        let result = this.groupApplication(newApplications);
-        let card_titles = this.createCardTitle(result);
-        let card_class = this.createCardClass(result);
-
-        this.setState({
-            applications: newApplications,
-            card_titles: card_titles,
-            card_class: card_class,
-            showModal: false,
-            application: null
-        })
+        let token = localStorage.getItem('auth-token')
+        if(!token){
+            this.props.switchPage('LoginPage')
+        }
+        else{
+            $.ajax({
+                url: 'http://localhost:5000/application',
+                method: 'DELETE',
+                headers:{
+                    'x-access-token': token
+                },
+                async: false,
+                data:JSON.stringify({
+                    application: application
+                }),
+                contentType: 'application/json',
+                success: (msg)=>{
+                        console.log("Success")
+                },
+                error: (err)=>{
+                    console.log(JSON.stringify(err));
+                },
+                complete: (data)=>{
+                    this.componentDidMount()
+                }
+            })
+            // rerender the page to represent the update result
+            let result = this.groupApplication(newApplications);
+            let card_titles = this.createCardTitle(result);
+            let card_class = this.createCardClass(result);
+    
+            this.setState({
+                applications: newApplications,
+                card_titles: card_titles,
+                card_class: card_class,
+                showModal: false,
+                application: null
+            })    
+        }
     }
 
     // open the card modal according to the application in parameter

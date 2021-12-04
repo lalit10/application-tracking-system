@@ -399,7 +399,7 @@ def create_app():
     body: {}
     """
 
-    @app.route("/logout")
+    @app.route("/logout", methods=['POST'])
     def logout():
         isAuth = authenticator()
         if isAuth == 0:
