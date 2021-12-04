@@ -1,5 +1,5 @@
-Link to the Delta in Project during Phase 3 :-
-
+Link to the Delta in Project during Phase 3 -
+This video shows only the new features and enhancement of some older features.
 
 [![GitHub license](https://img.shields.io/github/license/Team-Glare/application-tracking-system)](https://github.com/Team-Glare/application-tracking-system/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/417325535.svg)](https://zenodo.org/badge/latestdoi/417325535)
