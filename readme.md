@@ -9,6 +9,7 @@
 [![Super Linter](https://github.com/Team-Glare/application-tracking-system/actions/workflows/super-linter.yml/badge.svg)](https://github.com/Pratyush1184/application-tracking-system/actions/workflows/super-linter.yml)
 
 #      J-Tracker - Your Job Tracking Assistant
+### Here's how the previous application looks like:
 
 https://user-images.githubusercontent.com/43064854/135554150-c06afd4e-d223-47e3-b123-b45f9cd1b87a.mp4
 
@@ -25,7 +26,7 @@ This application is created as a part of our SE project for Fall 2021
 ## Basic Design:
 ![Basic Design](https://github.com/prithvish-doshi-17/application-tracking-system/blob/main/resources/Overall%20Design.PNG)
 
-### Here's how the application looks:
+### Here's how the updated application looks:
 
 
 https://user-images.githubusercontent.com/25183992/144734142-f976c888-6952-4850-9748-5adb49c3e3e9.mp4
