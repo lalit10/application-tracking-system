@@ -1,6 +1,7 @@
-## IMPROVEMENTS - Phase 3
+:rocket: Improvements over Phase-II
+---
 
-The enhancements we implemented in this job application tracking system is as follows:
+The 'Application Tracking System' was envisioned as a local application in Phase-II which was meant to be used as a standalone native Python, React based desktop application. Even though a native application is good in usecases such as heavy processing and zero downtime but in the bigger picture, it fades in comparison to an online web application. Our efforts in phase-III were to convert a native Python standalone application to a web application on cloud ensuring zero downtime and consistent experience over the entire userbase. Our vision is to provide a one-stop solution for job hunting and tracking needs in these tiring times which is packaged in a sleek and easy to implement cloud pipeline. As the application was earlier aimed for a single user, we have implemented user session management so that each user can track his or her own job applications. 
 
 * The job application tracking system was initially create as a stand-alone application that could be run on a host machine. To improve this and bring it closer to an application that would be used by multiple users in a real world scenario, we converted it into a web-application that supports multiple users.
 * We did this by adding User level access control to segregate each user's application data. Now, every application is linked to a particular user who created it.
