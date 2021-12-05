@@ -1,5 +1,5 @@
 [![GitHub license](https://img.shields.io/github/license/Team-Glare/application-tracking-system)](https://github.com/Pratyush1184/application-tracking-system/blob/main/LICENSE)
-[![DOI](https://zenodo.org/badge/417325535.svg)](https://zenodo.org/record/5759265)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5759265.svg)](https://zenodo.org/record/5759265)
 [![codecov](https://codecov.io/gh/Pratyush1184/application-tracking-system/branch/main/graph/badge.svg?token=UQZ513JMBJ)](https://codecov.io/gh/Pratyush1184/application-tracking-system)
 ![GitHub issues](https://img.shields.io/github/issues/Team-Glare/application-tracking-system)
 ![GitHub issues](https://img.shields.io/github/issues-closed/Team-Glare/application-tracking-system)
