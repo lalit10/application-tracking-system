@@ -26,7 +26,10 @@ This application is created as a part of our SE project for Fall 2021
 ![Basic Design](https://github.com/prithvish-doshi-17/application-tracking-system/blob/main/resources/Overall%20Design.PNG)
 
 ### Here's how the application looks:
-https://user-images.githubusercontent.com/11155124/144732604-9a7ba166-d10e-4356-8e8c-d6dc9116cde6.mp4
+
+
+https://user-images.githubusercontent.com/25183992/144734142-f976c888-6952-4850-9748-5adb49c3e3e9.mp4
+
 
 This video shows only the new features implemented on top of the existing project.
 
