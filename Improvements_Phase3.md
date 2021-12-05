@@ -9,3 +9,4 @@ The 'Application Tracking System' was envisioned as a local application in Phase
 * Implemented an authentication service to authenticate each user trying to use the platform.
 * To expand the usability and reach of this application, we deployed the application on a cloud platform which makes it accessible to anyone who wishes to use it.
 * The frontend part of the application is deployed on Azure VM while we did the backend deployment on Heroku. The reason is that while we did both backend and frontend last time on Azure, we racked up costs for consistently hitting the API's and we consumed around 200$ of azure credits.
+* We have created an API for exporting user specific jobs from the user dashboard incorporating all the necessary fields.
