@@ -1,6 +1,6 @@
-Link to the Delta in Project during Phase 3 :
+Link to the Delta in Project during Phase 3 : [here](https://github.com/Pratyush1184/application-tracking-system/blob/main/Phase%203%20updates.mp4)
 
-This video shows only the new features and enhancement of some older features.
+This video shows only the new features implemented on top of the existing prohect.
 
 
 [![GitHub license](https://img.shields.io/github/license/Team-Glare/application-tracking-system)](https://github.com/Team-Glare/application-tracking-system/blob/main/LICENSE)

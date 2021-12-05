@@ -1,9 +1,11 @@
-## IMPROVEMENTS - Phase 3
+:rocket: Improvements over Phase-II
+---
 
-The enhancements we implemented in this job application tracking system is as follows:
+The 'Application Tracking System' was envisioned as a local application in Phase-II which was meant to be used as a standalone native Python, React based desktop application. Even though a native application is good in usecases such as heavy processing and zero downtime but in the bigger picture, it fades in comparison to an online web application. Our efforts in phase-III were to convert a native Python standalone application to a web application on cloud ensuring zero downtime and consistent experience over the entire userbase. Our vision is to provide a one-stop solution for job hunting and tracking needs in these tiring times which is packaged in a sleek and easy to implement web application. As the application was earlier aimed for a single user, we have implemented user session management so that each user can track his or her own job applications. Also, the application needed to be run locally which has now been eliminated, so a user from non technical background can use it as well. Cloud deployment over Azure and Heroku ensures that the application has minimal downtime. This deployment architecture even nudges students to learn new deployment techniques which would be frutiful in Phase 4 part.
 
 * The job application tracking system was initially create as a stand-alone application that could be run on a host machine. To improve this and bring it closer to an application that would be used by multiple users in a real world scenario, we converted it into a web-application that supports multiple users.
 * We did this by adding User level access control to segregate each user's application data. Now, every application is linked to a particular user who created it.
 * We also added session management features for each user. This is implemented based on their JWT (JSON web token) token.
 * Implemented an authentication service to authenticate each user trying to use the platform.
 * To expand the usability and reach of this application, we deployed the application on a cloud platform which makes it accessible to anyone who wishes to use it.
+* The frontend part of the application is deployed on Azure VM while we did the backend deployment on Heroku. The reason is that while we did both backend and frontend last time on Azure, we racked up costs for consistently hitting the API's and we consumed around 200$ of azure credits.
