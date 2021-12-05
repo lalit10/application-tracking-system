@@ -91,35 +91,6 @@ Any details in any table can be modified at any time during the process.
 ### Web application Link:
 http://flask-group19-se.eastus.cloudapp.azure.com:3000/
 
-### Requirements:
-* [Python](https://www.python.org/downloads/) (recommended >= 3.8)
-* [pip](https://pip.pypa.io/en/stable/installation/) (Latest version 21.3 used as of 11/3)
-* [npm](https://nodejs.org/en/) (Latest version 6.14.4 used as of 11/3)
-### Strongly Recommended:
-* A terminal environment capable of handling bash scripts.
-
-To install all required packages, while within the context of project root directory, run:
-```
-./setup.sh
-```
-This will handle all npm and pip package installations required for both the front and backend.
-
-*If the script says "command not found" or something similar, run chmod +x ./setup.sh. This grants the script execution privileges. Depending on your setup, this may occur for the boot_dockerless files, amongst others. The same command will fix the issue.*
-
-## Getting Started:
-### Boot:
-To run a testing environment, run:
-```
-./startup.sh
-```
-This will run flask and npm simultaneously, booting both the front and backend. Note - npm takes substantially longer to boot compared to flask.
-### Shutdown:
-To ensure that flask is no longer occupying a port, run:
-```
-./shutdown.sh
-```
-This will search for any active process containing "flask" and kill the process.
-
 ## Hosting the Database:
 ### Local MongoDB:
 1. Download [MongoDB Community Server](https://docs.mongodb.com/manual/administration/install-community/)
