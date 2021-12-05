@@ -1,8 +1,3 @@
-Link to the Delta in Project during Phase 3 : [here](https://github.com/Pratyush1184/application-tracking-system/blob/main/Phase%203%20updates.mp4)
-
-This video shows only the new features implemented on top of the existing prohect.
-
-
 [![GitHub license](https://img.shields.io/github/license/Team-Glare/application-tracking-system)](https://github.com/Team-Glare/application-tracking-system/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/417325535.svg)](https://zenodo.org/badge/latestdoi/417325535)
 [![codecov](https://codecov.io/gh/Pratyush1184/application-tracking-system/branch/main/graph/badge.svg?token=UQZ513JMBJ)](https://codecov.io/gh/Pratyush1184/application-tracking-system)
@@ -31,32 +26,28 @@ This application is created as a part of our SE project for Fall 2021
 ![Basic Design](https://github.com/prithvish-doshi-17/application-tracking-system/blob/main/resources/Overall%20Design.PNG)
 
 ### Here's how the application looks:
-https://user-images.githubusercontent.com/43064854/135554649-9f5e8f21-ff12-45c9-82b4-37078e88709d.mp4
+https://user-images.githubusercontent.com/11155124/144732604-9a7ba166-d10e-4356-8e8c-d6dc9116cde6.mp4
+
+This video shows only the new features implemented on top of the existing project.
 
 
-## Improvements:
+:rocket: Improvements over Phase-II
+---
 
+The 'Application Tracking System' was envisioned as a local application in Phase-II which was meant to be used as a standalone native Python, React based desktop application. Even though a native application is good in usecases such as heavy processing and zero downtime but in the bigger picture, it fades in comparison to an online web application. Our efforts in phase-III were to convert a native Python standalone application to a web application on cloud ensuring zero downtime and consistent experience over the entire userbase. Our vision is to provide a one-stop solution for job hunting and tracking needs in these tiring times which is packaged in a sleek and easy to implement web application. As the application was earlier aimed for a single user, we have implemented user session management so that each user can track his or her own job applications. Also, the application needed to be run locally which has now been eliminated, so a user from non technical background can use it as well. Cloud deployment over Azure and Heroku ensures that the application has minimal downtime. This deployment architecture even nudges students to learn new deployment techniques which would be frutiful in Phase 4 part.
 
-https://user-images.githubusercontent.com/89696745/140273086-a03a6c7b-2d06-47c5-a7d4-a27ec4e99c3e.mp4
+* The job application tracking system was initially create as a stand-alone application that could be run on a host machine. To improve this and bring it closer to an application that would be used by multiple users in a real world scenario, we converted it into a web-application that supports multiple users.
+* We did this by adding User level access control to segregate each user's application data. Now, every application is linked to a particular user who created it.
+* We also added session management features for each user. This is implemented based on their JWT (JSON web token) token.
+* Implemented an authentication service to authenticate each user trying to use the platform.
+* To expand the usability and reach of this application, we deployed the application on a cloud platform which makes it accessible to anyone who wishes to use it.
+* The frontend part of the application is deployed on Azure VM while we did the backend deployment on Heroku. The reason is that while we did both backend and frontend last time on Azure, we racked up costs for consistently hitting the API's and we consumed around 200$ of azure credits.
 
-
-
-* Easier setup instructions and Installation process
-* Restructuring the Flask application
-* Writing unit tests
-* Introducing Database
-* Removing unused codes and updating Gitignore
-* CI/CD Pipeline for Frontend app
-* Adding Linters, Code formatters
-* Adding Software documentation
-
-
-
-## Roadmap:
-![Roadmap](https://github.com/prithvish-doshi-17/application-tracking-system/blob/main/resources/Roadmap%20-%202.PNG)
 
 
 ## Future Scope: 
+
+* We have created web API to easily export user details such as jobs applied and the status the application is on. The functionality to call and export the API is an easy but important future scope.
 * Include deadline reminders for the application and interview.
 * Add a feature that allows users to attach these reminders to their Google calendar.
 * Incorporate notifications for upcoming deadlines. 
@@ -65,18 +56,23 @@ https://user-images.githubusercontent.com/89696745/140273086-a03a6c7b-2d06-47c5-
 * Include a link to the university’s career fair page. 
 * Direct connection to Linkedin, allowing for the addition of job opportunities to the wishlist.
 * Improve keyword search to improve specifications such as pay range, employment location, and so on.
-* An option to maintain separate profiles for job tracking.
 
 
-## Explanation:
 
-Currently, we have four fundamental steps in our project:
-
+## What was earlier build on Phase 2:
 
 1. The position for which you have applied
 2. The job you want to apply for, without a referral
 3. The job at which you have faced rejection, and
 4. The job you're waiting for a referral.
+
+## Phase 3 implementations:
+
+1. The application is now Multi-tenant.
+2. Different Sessions for users are created with individual logins.  
+3. Users cant bypass and look into each other's applications as the security is handled with JWTs with blacklisting.
+4. The Application is deployed on Azure ( Frontend ) and Heroku (Backend) for no downtime. 
+5. API created for user level job status export.
 
 
 Any details in any table can be modified at any time during the process.
@@ -87,6 +83,8 @@ Any details in any table can be modified at any time during the process.
 * Node.Js
 * Flask
 * MongoDB
+* Azure
+* Heroku
 
 ## Installation:
 ### Requirements:
