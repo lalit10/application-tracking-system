@@ -89,7 +89,7 @@ Any details in any table can be modified at any time during the process.
 
 ## Installation:
 ### Web application Link:
-*http://flask-group19-se.eastus.cloudapp.azure.com:3000/
+http://flask-group19-se.eastus.cloudapp.azure.com:3000/
 
 ### Requirements:
 * [Python](https://www.python.org/downloads/) (recommended >= 3.8)
