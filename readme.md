@@ -88,6 +88,9 @@ Any details in any table can be modified at any time during the process.
 * Heroku
 
 ## Installation:
+### Web application Link:
+*http://flask-group19-se.eastus.cloudapp.azure.com:3000/
+
 ### Requirements:
 * [Python](https://www.python.org/downloads/) (recommended >= 3.8)
 * [pip](https://pip.pypa.io/en/stable/installation/) (Latest version 21.3 used as of 11/3)
