@@ -41,7 +41,11 @@ def test_alive(client):
 
 #2. testing if the search function running properly
 def test_search(client):
-    rv = client.get('/search')
+    rv = client.get('/search',
+        headers={
+            'x-access-token':
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
+        })
     jdata = json.loads(rv.data.decode("utf-8"))["label"]
     assert jdata == 'successful test search'
 
@@ -54,10 +58,6 @@ def test_get_data(client):
                               date=str(datetime.date(2021, 9, 22)))
     list_application = []
     list_application.append(application)
-    # mocker.patch(
-    #     # Dataset is in slow.py, but imported to main.py
-    #     'app.Application.objects',
-    #     return_value=list_application)
     rv = client.get(
         '/application',
         headers={
@@ -95,39 +95,7 @@ def test_add_application(client):
     assert jdata == 'fakeJob12345'
 
 
-#5. testing if the application is updating data in database properly
-def test_update_application(client):
-    # application = Application(id=1,
-    #                           jobTitle='fakeJob12345',
-    #                           companyName='fakeCompany',
-    #                           date=str(datetime.date(2021, 9, 22)))
-
-    # mocker.patch('app.Application.update')
-
-    # mock_objects = mocker.MagicMock(name='objects')
-    # mocker.patch('app.Application.objects', new=mock_objects)
-    # mock_objects.return_value.first.return_value = application
-
-    rv = client.put(
-        '/application',
-        json={
-            'application': {
-                'id': 6,
-                'jobTitle': 'fakeJob12345',
-                'companyName': 'fakeCompany',
-                'date': str(datetime.date(2021, 9, 23)),
-                'status': '1'
-            }
-        },
-        headers={
-            'x-access-token':
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE2NDY2ODIxMzl9.I-nNQGxnA7izne_dfChGVUhHIPnyyh8PXG9Ba9XYRDQ'
-        })
-    jdata = json.loads(rv.data.decode("utf-8"))["jobTitle"]
-    assert jdata == 'fakeJob12345'
-
-
-#6. testing loging functionality
+#5. testing loging functionality
 def test_login(client):
 
     rv = client.post('/login',
@@ -138,7 +106,7 @@ def test_login(client):
     assert rv.status_code == 200
 
 
-#7. Testing User creation
+#6. Testing User creation
 def test_user_creation(client):
 
     rv = client.post(
@@ -158,7 +126,7 @@ def test_user_creation(client):
     assert rv.status_code == 200
 
 
-#8. Testing Get User API
+#7. Testing Get User API
 def test_getUser(client):
 
     rv = client.get(
