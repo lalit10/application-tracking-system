@@ -56,6 +56,7 @@ The 'Application Tracking System' was envisioned as a local application in Phase
 * Include a link to the university’s career fair page. 
 * Direct connection to Linkedin, allowing for the addition of job opportunities to the wishlist.
 * Improve keyword search to improve specifications such as pay range, employment location, and so on.
+* Docker images have been created for frontend and backend. We couldn't achieve interaction between them, the future team can implement it using Kuberetes.
 
 
 
