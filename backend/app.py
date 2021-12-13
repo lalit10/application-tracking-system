@@ -134,6 +134,16 @@ def create_app():
         user = User.objects(id=a['id']).first()
         return jsonify(user.to_json()), 200
 
+    """
+    path: '<server_url>/search'
+    method: 'GET'
+    headers:{
+        'x-access-token': token
+    }
+    body: {
+        keywords: "sample_searchText"
+    }
+    """
     @app.route("/search")
     def search():
         isAuth = authenticator()
@@ -226,7 +236,16 @@ def create_app():
         apps_json = dumps(apps_list)
         return jsonify(apps_json), 200
 
-    @app.route("/application.csv", methods=['GET'])
+    """
+    path: <server_url>/application/export
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {}
+    }
+    """
+    @app.route("/application/export", methods=['GET'])
     def get_data_csv():
         isAuth = authenticator()
         if isAuth == 0:

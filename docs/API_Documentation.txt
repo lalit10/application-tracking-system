@@ -1,0 +1,108 @@
+LOGIN API:
+    path: <server_url>/login
+    method: POST
+    headers: {}
+    body: {
+        "email" : "sample_email",
+        "passwd" : "sample_passwd"
+    }
+
+SEARCH API:
+    path: '<server_url>/search'
+    method: 'GET'
+    headers:{
+        'x-access-token': token
+    }
+    body: {
+        keywords: "sample_searchText"
+    }
+
+USE CREATION API:
+    path: <server_url>/createUser
+    method: POST
+    headers: {}
+    body: {
+        "name": "sample_name",
+        "email":"sample_email",
+        "addr":"sample_addr",
+        "phone":"sample_number",
+        "jobProfile":"sample_profile",
+        "passwd":"sample_password"
+    }
+
+GET USER DETAILS API:
+    path: <server_url>/getUser
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "id": "sample_user_id"
+    }
+
+GET APPLICATION DETAILS API:
+    path: <server_url>/application
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {}
+
+CREATE APPLICATION API:
+    path: <server_url>/application
+    method: POST
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "jobTitle": "sample_title",
+            "companyName": "sample_company",
+            "date": "sample_date",
+            "status": "sample_status"
+        }
+    }
+
+UPDATE APPLICATION API:
+    path: <server_url>/application
+    method: PUT
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "id": "application_id",
+            "jobTitle": "sample_title",
+            "companyName": "sample_company",
+            "date": "sample_date",
+            "status": "sample_status"
+        }
+    }
+
+DELETE APPLICATION API:
+    path: <server_url>/application
+    method: DELETE
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {
+        "application":{
+            "id": "application_id"
+        }
+    }
+
+USER LOGOUT API:
+    path: <server_url>/logout
+    method: POST
+    headers: {
+        'x-access-token' : 'auth_token'
+    }
+    body: {}
+
+EXPORT APPLICATION API:
+    path: <server_url>/application/export
+    method: GET
+    headers: {
+        "x-access-token": "auth-token"
+    }
+    body: {}
